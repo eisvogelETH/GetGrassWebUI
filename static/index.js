@@ -22,11 +22,11 @@ function updateOnlineCount(onlineCount, allCount) {
 
 // 弹出对话框输入 user_id 和 proxy
 function addUser() {
-    var userId = prompt("请输入UserID:");
+    var userId = prompt("Insert UserID:");
     if (!userId) {
         return
     }
-    var proxy = prompt("设置代理 (不使用代理点击取消)");
+    var proxy = prompt("Proxy http://user:pass@server:port)");
     if (userId) {
         // 构建带参数的 URL
         var baseUrl = '/client/';
@@ -43,14 +43,14 @@ function addUser() {
         })
         .then(response => {
             if (response.ok) {
-                alert('账号添加成功');
+                alert('Account added successfully');
                 fetchData();
             } else {
-                alert('账号添加失败');
+                alert('Failed to add account');
             }
         })
         .catch(error => {
-            alert('请求错误:', error);
+            alert('Requst error:', error);
         });
     }
 }
@@ -106,10 +106,10 @@ function uploadFile() {
         })
         .then(response => {
             if (response.ok) {
-                alert('文件上传成功');
+                alert('File uploaded successfully');
                 fetchData()
             } else {
-                alert('文件上传失败！');
+                alert('File upload failed');
             }
             hideLoading();
         })
@@ -135,10 +135,10 @@ function fetchData() {
     .then(response => response.json())
     .then(data => {
         const statusMap = {
-            0: '未连接',
-            1: '连接中',
-            2: '已连接',
-            3: '已停止'
+            0: 'Disconnected',
+            1: 'Connecting ...',
+            2: 'Connected',
+            3: 'Stopped'
         };
         let counter = 0; // 初始编号为1
         let onlineCounter = 0;
