@@ -10,7 +10,7 @@
 3. GUI deployed at:`http://127.0.0.1:8000`
 4. Upload file to add multiple accounts `account.txt`
 
-### **Docker Compose **
+### ** Docker Compose **
 1. `git clone https://github.com/Confusion-ymc/GetGrassWebUI.git`
 2. `docker compose up --build -d`
 3. GUI deployed at: `http://{容器ip}:8000`
