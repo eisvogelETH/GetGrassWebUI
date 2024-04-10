@@ -7,8 +7,8 @@
 ### **Run Python script alone**
 1. ```pip3 install -r requirements.txt```
 2. ```python3 main.py```
-3. 浏览器访问`http://127.0.0.1:8000`
-4. 点击上传文件 上传编辑好的 `account.txt`
+3. GUI deployed at:`http://127.0.0.1:8000`
+4. Upload file to add multiple accounts `account.txt`
 
 ### **Docker Compose **
 1. `git clone https://github.com/Confusion-ymc/GetGrassWebUI.git`
