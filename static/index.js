@@ -154,8 +154,8 @@ function fetchData() {
                 <td class="proxy">${item.proxy_url || ''}</td>
                 <td class="status-${item.status}">${statusMap[item.status]}</td>
                 <td>
-                    <button onclick="showLogs('${item.id}')">日志</button>
-                    <button onclick="deleteUser('${item.id}')">删除</button>
+                    <button onclick="showLogs('${item.id}')">Show Logs</button>
+                    <button onclick="deleteUser('${item.id}')">Delete User</button>
                 </td>
             `;
             tableBody.appendChild(row);
