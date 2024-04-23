@@ -34,8 +34,11 @@ class AsyncGrassWs:
         self._stop = False
         self._stopped = False
         self._ping_stopped = False
-        self.server_url = "wss://proxy.wynd.network:4650/"
         self.server_hostname = "proxy.wynd.network"
+        self.server_port = 4444
+        self.server_url = f"wss://{self.server_hostname}:{self.server_port}/"
+        self.proxy_timeout = 60
+
         self.logs = []
 
     def log(self, level, message):
@@ -94,7 +97,8 @@ class AsyncGrassWs:
                     ws_proxy = socks.socksocket()
                     ws_proxy.set_proxy(socks.PROXY_TYPES[proxy_type.upper()], http_proxy_host, http_proxy_port,
                                        username=username, password=password)
-                    await loop.run_in_executor(None, ws_proxy.connect, ("proxy.wynd.network", 4650))  # 执行阻塞函数
+                    async with asyncio.timeout(self.proxy_timeout):
+                        await loop.run_in_executor(None, ws_proxy.connect, (self.server_hostname, self.server_port))  # 执行阻塞函数
                     self.log(DEBUG, f'[连接代理成功] [{self.user_id}] [{self.proxy_url}]')
                 ssl_context = ssl.create_default_context()
                 ssl_context.check_hostname = False
@@ -127,6 +131,8 @@ class AsyncGrassWs:
                         pong_response = {"id": message["id"], "origin_action": "PONG"}
                         self.log(DEBUG, f'[发送消息] [{self.user_id}] [{self.proxy_url}] [{pong_response}]')
                         await self.ws.send(json.dumps(pong_response))
+            except TimeoutError as e:
+                self.log(INFO, f'[连接超时] [{self.user_id}] [{self.proxy_url}] {e}')
             except Exception as e:
                 self.log(INFO, f'[连接断开] [{self.user_id}] [{self.proxy_url}] {e}')
             self.status = Status.disconnect
